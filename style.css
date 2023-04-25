@@ -1,10 +1,13 @@
-/*
-Theme Name: motaphoto
-Theme URI: https://www.motafoto.com/
-Author: Azenor
-Author URI: https://www.Agence-Azenor.com/
-Description: le thème de Nathalie Mota photographe professionnelle en événementiel
-Version: 1.0
+ /*
+Theme Name: Motaphoto
+Theme URI: https://www.motaphoto.com/
+Description: Le site d'une photographe qui sublime vos précieux instants.
+Author: azenor
+Version: 1.0.0
+Licence: GNU General Public Licence v2 or later
+Licence URI: http://www.gnu.org/licences/gpl-2.0.html
+Tags: Photographe evenementiel
+Text Domain: motaphoto
 */
 
 /*font family*/
@@ -41,7 +44,9 @@ font-family: 'SpaceMono';
 .menu-primary-container{
     display: flex;
     justify-content: end;
-    width:50%;
+    width:50vw;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 
@@ -90,6 +95,8 @@ font-family: 'SpaceMono','sans-serif';}
     background-color: #ffffff;
     border: solid 2px black;
     animation: appmodal 3s ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes appmodal{
@@ -103,11 +110,11 @@ font-family: 'SpaceMono','sans-serif';}
     position:relative;
 }
 
-.vide{
-    background-image: url("./assets/Contact.png");
-    min-height: 98px;
+.vide img{
+    min-height: 100px;
     width: 100%;
 }
+
 
 .modal {
     display: none; 
@@ -174,10 +181,11 @@ margin-right: 2vw;
     width:50vw;
 }
 .post-content img{
-    object-fit: contain;
-    height: 100vh;
-    width: 100vw;
+    object-fit: contain !important;
+    min-width: 50vw !important;
+    height: auto!important;
     object-position: right;
+    min-height: 70vh;
 }
 
 /*sous partie*/
@@ -231,7 +239,7 @@ margin-right: 2vw;
 }
 
 /*photoblock*/
-.debphoto img{
+.wp-block-image img{
     width:42vw;
     height:70vh;
     object-fit: cover;
@@ -260,7 +268,6 @@ text-decoration: none;
     border-left: 3px solid black;
     padding: 1vh;
     font-family:'Poppins','sans serif';
-    width:15vw;
     margin:auto;
     transition:rotate 1 spin 4s ease-in;
 }
@@ -287,12 +294,13 @@ text-decoration: none;
     font-family: 'SpaceMono';
     font-style: italic;
     font-weight: 700;
-    font-size: 6em;
+    font-size: 6vw;
     position: absolute;
-    top:45vh;
+    top:34vh;
     left:16vw;
     color:transparent;
     -webkit-text-stroke: 2px white;
+    margin:auto;
 }
 
 /*photos index*/
@@ -300,7 +308,6 @@ text-decoration: none;
     width:42vw;
     height:70vh;
     object-fit: cover;
-    margin-bottom:5vh;
 }
 
 .indexphoto{
@@ -318,7 +325,7 @@ text-decoration: none;
 
 /*bouton pagination*/
 .btn__primary{
-    width: 15vw;
+    width: 17vw;
     background-color: #ffffff;
     font-family: "SpaceMono","sans serif";
     border: 0px;
@@ -326,3 +333,324 @@ text-decoration: none;
     margin:auto;
     margin-bottom: 6vh;
 }
+
+/* filtres*/
+.post-filters{
+    margin-bottom: 5vh;
+    display: flex;
+    margin-left:3vw;
+    justify-content: space-between;
+    margin-right: 7.2vh;
+}
+
+.adjust{
+    margin-left:-30vw;
+}
+
+.post-filters select{
+    width:14vw;
+}
+#tri-select{
+    width:19vw;
+}
+
+.post-filters div{
+    display: flex;
+    flex-direction: column;
+}
+
+select{
+    background-color: #ffffff;
+    border: solid  black 1px;
+}
+
+/*lightbox*/
+.full_window{
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 5%; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.8); 
+}
+
+.window-overlay{
+    position: relative;
+    margin: auto; 
+    padding: 0;
+    width: 90%; 
+    text-align: center;
+}
+
+.window-overlay img{
+    max-width:90vw;
+    max-height: 90vh;
+ 
+}
+.closehere{
+position: fixed;
+top: 5vh;
+height: auto;
+right: 4vw;
+}
+
+/*overlay image*/
+.overlay-image {
+    position: relative;
+    width: auto;
+    margin-bottom:5vh;
+}
+
+.overlay-image .hover {
+    position: absolute;
+    top: 0;
+    height: 97%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+}
+
+ .overlay-image:hover .hover {
+    opacity: 1;
+    background:linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.92) 100%);
+}
+
+.full_screen{
+width: 4vw;
+height:6vh;
+right: 1vw;
+position: absolute;
+top: 1vh;
+}
+
+.eye{
+    position: absolute;
+    top: 45%;
+    left:44%;
+}
+
+.overlay-image  .texte{
+    position: absolute;
+    bottom: 1vh;
+    left:1vw;
+    font-family: 'Poppins','sans serif';
+    color:#ffffff;
+}
+
+.right_now{
+    position: absolute;
+    right: -25vw;
+    bottom: 0vw;
+}
+/*menu toggle*/
+#mySidenav{
+    display:none;
+}
+/*responsive mobile*/
+@media screen and (max-width: 820px){
+    .right_now{
+        position: absolute;
+        right: -22vw;
+    }
+/*single*/
+@media screen and (max-width: 700px){
+    .post{
+     flex-direction: column-reverse;
+    }
+
+    .post-content .wp-block-image img{
+      width: 80vw;
+    }
+
+    .post-content  figure{
+     margin: 5%;
+    }
+
+    .post-content{
+     width:90vw ;
+    }
+
+    .post-info{
+        width:80vw;
+    }
+
+    .carr{
+        display: none;
+    }
+
+    .sous_partie p{
+    flex-direction: column;
+    margin :auto;
+    }
+
+    .sous_partie input{
+     margin: auto;
+     margin-top: 2vh;
+    }
+
+    #photosapp{
+        flex-direction: column;
+    }
+
+    .overlay-image .wp-block-image img{
+        width:80vw;
+        margin:auto
+    }
+
+    #menu-footer{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    }
+
+    /*front-page*/
+    .btn__primary{
+        width:36vw;
+    }
+
+    .indexphoto{
+        flex-direction: column;
+    }
+
+    .indexphoto figure{
+        width:90vw;
+        margin:auto;
+    }
+
+    .post-filters{
+        flex-direction: column;
+        display: flex;
+    }
+
+    .adjust{
+        margin: 0%;
+    }
+
+    #tri-select ,
+    .post-filters select{
+        width:90vw;
+    }
+
+    .overlay-image .hover {
+        position: absolute;
+        top: 0;
+        height: 70vh;
+        width: 80vw;
+        opacity: 0;
+        right:7.5vw;
+        margin: auto;
+        transition: .5s ease;
+    }
+    /*menu burger*/
+    .menu_principal{
+        display:none;
+    }
+
+    header{
+        height:5vh;
+    }
+
+    .burger{
+        width: 100%;
+        height: 100%;
+        background-color: #FFF5E9;
+        position: fixed;
+    }
+
+    .burger ul{
+        display: block;
+        text-align: center;
+        }
+
+    .burger li{
+        /* font-size: 40px; */
+     margin-top: 34%;
+   }
+
+ .sidenav {
+     height: 97.7vh;
+     width: 100%;
+     position: fixed;
+     z-index: 1;
+     top: -200%;
+     left: 0%;
+     background-color: red;
+     padding-top: 0px;
+     transition: left 0.5s ease;
+     margin-top: 5%;
+   }
+
+  .sidenav ul {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
+     display: block;
+     text-align: center;
+    }
+
+ .sidenav a {
+     text-decoration: none;
+     font-size: 32px;
+     color: white;
+     display: block;
+     transition: 0.3s;
+     justify-content: center;
+     font-family: 'SpaceMono','sans serif';
+     margin: auto;
+  }
+
+   .menu-primary-container{
+    justify-content: center;
+    width:100vw;
+    margin-top:4vh;
+  }
+           
+  /* Active class */
+  .sidenav.active {
+     top: 2.3vh;
+  }
+          
+  /* Close btn */
+  .closeBtn {
+     width: 35px;
+     height: 23px;
+     position: absolute;
+     top:1.5vh;
+     right: 5vw;
+     content: url("./assets/Close_burger.png");
+    }
+          
+ .openBtn {
+     width: 35px;
+     height: 23px;
+     position: absolute;
+     top:1.5vh;
+     right: 5vw;
+     content: url("./assets/toggle.png");
+   }
+ .burger-icon{
+     position: absolute;
+      top: 30%;
+      right: 10%;
+  }
+
+  #mySidenav{
+        display:block;
+     }
+}
+
+@media screen and (max-width: 600px){
+    #heroheader h1{
+        top:28vh;}}
+
+@media screen and (max-width: 450px){
+    #heroheader h1{
+        top:24vh;}}
+
+@media screen and (max-width: 450px){
+    #heroheader h1{
+           top:20vh;}}

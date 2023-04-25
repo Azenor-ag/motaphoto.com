@@ -9,8 +9,8 @@ add_theme_support( 'title-tag' );
 
 
 function theme_enqueue_styles() {
-wp_enqueue_script( 'script.js', get_stylesheet_directory_uri() . '/script.js', array(), "1.0.0", true);
 wp_enqueue_style('motaphota', get_stylesheet_directory_uri() . '/style.css', array(),false);
+wp_enqueue_script('lightbox',get_stylesheet_directory_uri() . '/lightbox.js', array(),'1.0', true);
 wp_enqueue_script('script2',get_stylesheet_directory_uri() . '/script.js', array('jquery'), '', true);
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
@@ -36,33 +36,90 @@ function register_my_menus() {
 
    /*renvoyer la référence dans la modale*/
 ?>
+
+
 <?php
-/* pagination infinie*/
-function weichie_load_more() {
-  $ajaxposts = new WP_Query([
+function filtre(){
+
+  $filtrajax = new WP_Query([
     'post_type' => 'photo',
-    'posts_per_page' => 4,
+    'orderby'  => 'date',
+    'order' => $_POST['post_ordre'],
     'paged' => $_POST['paged'],
-    'post__not_in' => array (get_the_ID()),
+    'posts_per_page' => 12,
+    'tax_query' => array(
+      $_POST['category'] !="all" ?
+      array(
+         'taxonomy' =>'categorie' ,
+         'field'    => 'slug',
+        'terms'    => $_POST['category'],
+      )
+      :'',
+      $_POST['post_format'] !="all" ?
+      array(
+        'taxonomy' => 'format' ,
+        'field'    => 'slug',
+        'terms'    => $_POST['post_format'],
+      )
+      :'',
+    )
   ]);
 
-
-
-   if($ajaxposts->have_posts()) : 
-     while($ajaxposts->have_posts()) : 
-       $ajaxposts->the_post();?>       
-        <a href="<?php the_permalink()?>">   
-         <?php the_content(); ?>
-       </a>
-          <?php if(has_post_thumbnail()) : ?>
-          <?php endif; ?> 
+  if($filtrajax->have_posts()) : 
+    while($filtrajax->have_posts()) : 
+      $filtrajax->the_post();?>       
+            <div class="overlay-image">
+                  <?php the_content(); ?>
+                <div class=hover>
+                   <img class="full_screen" data-image="<?php echo get_the_post_thumbnail_url(); ?>" src="<?php echo get_template_directory_uri(); ?>./assets/fullscreen.png" alt="full_screen">
+                   <a href="<?php echo get_the_permalink(get_the_ID());?>">
+                     <img class="eye" src="<?php echo get_template_directory_uri(); ?>./assets/eye.png" alt="eye">
+                   </a>
+                   <div class="texte">
+                     <div> <?php the_title(); ?></div>
+                      <div class="right_now"><?php echo strip_tags(get_the_term_list($post->ID, 'categorie'));?></div>
+                   </div>
+                </div>  
+           </div>
     <?php endwhile; ?>
-<?php endif; ?> 
-<?php wp_reset_postdata(); 
-
-
-  exit;
+  <?php endif; 
+    wp_reset_postdata();
+    exit();
 }
-add_action('wp_ajax_weichie_load_more', 'weichie_load_more');
-add_action('wp_ajax_nopriv_weichie_load_more', 'weichie_load_more');
+add_action('wp_ajax_filtre', 'filtre');
+add_action('wp_ajax_nopriv_filtre', 'filtre');
+?>
+
+<?php
+function ajoutCategorie(){
+if($terms = get_terms(array(
+  'taxonomy' =>'categorie' ,
+  'field'    => 'slug',
+ 'terms'    => $_POST['category'],
+)))
+foreach ($terms as $term){
+  echo '<option  value="'.$term->slug.'">'.$term ->name.'</option>';
+}
+}
+
+function ajoutFormat(){
+  if($terms = get_terms(array(
+    'taxonomy' =>'format' ,
+    'field'    => 'slug',
+   'terms'    => $_POST['post_format'],
+  )))
+  foreach ($terms as $term){
+    echo '<option  value="'.$term->slug.'">'.$term ->name.'</option>';
+  }
+  }
+
+function ajoutOrderDirection(){
+  if ($order_options = (array(
+      'DESC' => 'Nouveautés',
+      'ASC' => 'Les plus anciens',
+    )))
+    foreach( $order_options as $value => $label ) {
+        echo "<option ".selected( $_POST['tri'], $value )." value='$value'>$label</option>";
+    }
+  }
 ?>

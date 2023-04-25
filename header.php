@@ -8,10 +8,18 @@
 </head>
 
 <body <?php body_class(); ?>>
-  <header>
+ <header>
       <?php the_custom_logo() ; ?>
-    <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
-  </header>
+      <div class="menu_principal">
+      <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
+      </div>
+     <div id="mySidenav" class="sidenav burger">
+        <?php wp_nav_menu( array( 'theme_location' => 'header-menu' ) ); ?>
+    </div>
+
+<a href="#" id="chgt" class="openBtn"></a>
+ </header>
+
 
  
  

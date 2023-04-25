@@ -21,7 +21,7 @@
 			<p>Cette photo vous intéresse ?
 				<input type="button" value="Contact" id="lienmodale">
 			</p>
-			<div>
+			<div class="carr">
 				<?php the_post_thumbnail(); ?>
 				<p class="carrousel">
 					<?php $prevPost = get_previous_post();

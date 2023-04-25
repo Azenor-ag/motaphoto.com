@@ -1,5 +1,6 @@
+<div id="heroheader"  >
 <?php
-//Create WordPress Query with 'orderby' set to 'rand' (Random)
+
 $the_query = new WP_Query( array ( 
     'orderby' => 'rand',
      'posts_per_page' => 1 ,
@@ -9,6 +10,9 @@ while ( $the_query->have_posts() ) : $the_query->the_post();
 the_post_thumbnail();
 endwhile;
 
+
 //Reset Post Data
 wp_reset_postdata();
 ?>
+<h1 >PHOTOGRAPHE EVENT</h1>
+</div>
